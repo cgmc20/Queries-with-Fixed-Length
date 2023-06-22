@@ -1,0 +1,57 @@
+package maths;
+
+import java.util.*;
+
+public class Q4_Test
+{
+
+    public static List<Integer> solve(List<Integer> arr, List<Integer> queries)
+    {
+        List<Integer> minList=new ArrayList<>();
+        for(int i=0;i<queries.size();i++)
+        {
+            int d=queries.get(i);
+            int j=0;
+            int k;
+            int max=Integer.MIN_VALUE;
+            int min=Integer.MAX_VALUE;
+            while(j<=arr.size()-d)  // for each value of d move j to point to every element in arraylist arr to a maximun index of size of arr minus d
+            {
+                k=j+d;  // sets upper limit  for sublist where we are going to get maximun value
+                if(j==0 || max==arr.get(j-1) || k==arr.size())  // maximun value is previous element of the first element of sublist
+                {
+                    List<Integer> subList=arr.subList(j,k);
+                    max=Collections.max(subList);
+                }
+                else
+                {
+                    if(arr.get(k)>max)  // compare last maximun value to next element in list to get next maximun value
+                        max=arr.get(k);
+                }
+                if(max<min)
+                    min=max;
+                j++;
+            }
+            minList.add(min);
+        }
+        return minList;
+    }
+
+    public static void main(String[] args)
+    {
+        List<Integer> list=new ArrayList<>();
+        list.add(33);
+        list.add(11);
+        list.add(44);
+        list.add(11);
+        list.add(55);
+
+        List<Integer> queries=new ArrayList<>();
+        queries.add(1);
+        queries.add(2);
+        queries.add(3);
+        queries.add(4);
+        queries.add(5);
+        System.out.println(Q4_Test.solve(list,queries));
+    }
+}
